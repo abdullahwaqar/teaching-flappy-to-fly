@@ -2,7 +2,7 @@ class Pipe {
     constructor() {
 
       // How big is the empty space
-      let spacing = 125;
+      let spacing = 175;
       // Where is th center of the empty space
       let centery = random(spacing, height - spacing);
 
@@ -19,7 +19,7 @@ class Pipe {
 
     // Did this pipe hit a bird?
     hits(bird) {
-      if ((bird.y - bird.r) < this.top || (bird.y + bird.r) > (height - this.bottom)) {
+      if ((bird.y - bird.radius) < this.top || (bird.y + bird.radius) > (height - this.bottom)) {
         if (bird.x > this.x && bird.x < this.x + this.w) {
           return true;
         }

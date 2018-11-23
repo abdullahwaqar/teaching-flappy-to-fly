@@ -2,20 +2,24 @@ class Bird {
     constructor() {
         this.y = height / 2;
         this.x = 64;
+        this.radius = 12;
         this.gravity = 0.6;
         this.velocity = 0;
         this.liftForce = -12;
 
+        this.score = 0;
+        this.fitness = 0;
         /*
         ? Declaring the Brain of the bird/ball
-        ?@param: input[4] hiddenNode[4] output[1]
+        ?@param: input[4] hiddenNode[4] output[2]
         */
-        this.brain = new NeuralNetwork(4, 4, 1);
+        this.brain = new NeuralNetwork(4, 4, 12);
     }
 
     show() {
-        fill(255);
-        ellipse(this.x, this.y, 32, 32);
+        stroke(255);
+        fill(255, 50);
+        ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
     }
 
     liftUp() {
@@ -42,12 +46,13 @@ class Bird {
 
         //// let input = [1.0, 0.5, 0.2, 0.3];
         let output = this.brain.predict(inputs);
-        if (output > 0.5) {
+        if (output[0] > output[1]) {
             this.liftUp();
         }
     }
 
     update() {
+        this.score++;
         this.velocity += this.gravity;
         this.velocity *= 0.9; // air resistance
         this.y += this.velocity;
