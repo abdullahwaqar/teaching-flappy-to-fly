@@ -20,21 +20,31 @@ function draw() {
         }
 
         if (pipe.offScreen()) {
-            pipes.shift();
+            pipes = pipes.filter(() => {
+                return true;
+            });
         }
     });
+    // for (let i = pipes.length - 1; i >= 0; i--) {
+    //     pipes[i].update();
+    //     pipes[i].show();
+    //     if (pipes[i].offScreen()) {
+    //         pipes.splice(i, 1);
+    //     }
+    // }
 
+    bird.think(pipes);
     bird.update();
     bird.show();
 
-    if (frameCount % 100 == 0) {
+    if (frameCount % 75 == 0) {
         pipes.push(new Pipe());
     }
 }
 
-function keyPressed() {
-    if (key == ' ') {
-        bird.liftUp();
-        // console.log('space');
-    }
-}
+// function keyPressed() {
+//     if (key == ' ') {
+//         bird.liftUp();
+//         // console.log('space');
+//     }
+// }

@@ -10,7 +10,7 @@ class Bird {
         ? Declaring the Brain of the bird/ball
         ?@param: input[4] hiddenNode[4] output[1]
         */
-        this.brain = new NeuralNetwork();
+        this.brain = new NeuralNetwork(4, 4, 1);
     }
 
     show() {
@@ -20,6 +20,31 @@ class Bird {
 
     liftUp() {
         this.velocity += this.liftForce;
+    }
+
+    think(pipes) {
+        //* Find the closet pipe
+        let closetPipe = null;
+        let closetDistance = Infinity;
+        for (let i = 0; i < pipes.length; i++) {
+            let d = pipes[i].x - this.x;
+            if (d < closetDistance) {
+                closetPipe = pipes[i];
+                closetDistance = d;
+            }
+        }
+
+        let inputs =[];
+        inputs[0] = this.y / height;
+        inputs[1] = closetPipe.top / height;
+        inputs[2] = closetPipe.bottom / height;
+        inputs[3] = closetPipe.x / width;
+
+        //// let input = [1.0, 0.5, 0.2, 0.3];
+        let output = this.brain.predict(inputs);
+        if (output > 0.5) {
+            this.liftUp();
+        }
     }
 
     update() {
