@@ -5,6 +5,12 @@ class Bird {
         this.gravity = 0.6;
         this.velocity = 0;
         this.liftForce = -12;
+
+        /*
+        ? Declaring the Brain of the bird/ball
+        ?@param: input[4] hiddenNode[4] output[1]
+        */
+        this.brain = new NeuralNetwork();
     }
 
     show() {
