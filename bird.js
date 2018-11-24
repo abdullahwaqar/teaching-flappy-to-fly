@@ -1,5 +1,5 @@
 class Bird {
-    constructor() {
+    constructor(brain) {
         this.y = height / 2;
         this.x = 64;
         this.radius = 12;
@@ -13,7 +13,11 @@ class Bird {
         ? Declaring the Brain of the bird/ball
         ?@param: input[4] hiddenNode[4] output[2]
         */
-        this.brain = new NeuralNetwork(4, 4, 12);
+       if (brain) {
+           this.brain = brain.copy();
+       } else {
+           this.brain = new NeuralNetwork(4, 4, 12);
+       }
     }
 
     show() {
@@ -24,6 +28,10 @@ class Bird {
 
     liftUp() {
         this.velocity += this.liftForce;
+    }
+
+    mutate() {
+        this.brain.mutate(0.1);
     }
 
     think(pipes) {

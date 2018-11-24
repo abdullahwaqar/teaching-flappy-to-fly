@@ -2,17 +2,22 @@ const TOTAL_POPULATION = 250;
 let birds = [];
 let savedBirds = [];
 let pipes = [];
+let counter = 0;
 
 function setup() {
     createCanvas(400, 600);
     for (let i = 0; i < TOTAL_POPULATION; i++) {
         birds[i] = new Bird();
     }
-    pipes.push(new Pipe());
 }
 
 function draw() {
     background(0);
+
+    if (counter % 75 == 0) {
+        pipes.push(new Pipe());
+    }
+    counter++;
 
     //Drawing the pipes
     pipes.forEach((pipe) => {
@@ -22,7 +27,7 @@ function draw() {
         for (let j = birds.length - 1; j >=0; j--) {
             if (pipe.hits(birds[j])) {
                 console.log('We Got a Hit');
-                birds.splice(j, 1);
+                savedBirds.push(birds.splice(j, 1)[0]);
             }
         }
         // birds.forEach((bird) => {
@@ -54,10 +59,9 @@ function draw() {
     }
 
     if (birds.length === 0) {
+        counter = 0;
         nextGeneration();
-    }
-
-    if (frameCount % 75 == 0) {
+        pipes = [];
         pipes.push(new Pipe());
     }
 }

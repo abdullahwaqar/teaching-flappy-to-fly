@@ -7,6 +7,14 @@ function nextGeneration() {
     for (let i = 0; i < TOTAL_POPULATION; i++) {
         birds[i] = pickOne();
     }
+    savedBirds = [];
+}
+
+function pickOne() {
+    let bird = random(savedBirds);
+    let child = new Bird(bird.brain);
+    child.mutate();
+    return child;
 }
 
 function calculateFitness() {
